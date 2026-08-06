@@ -1,745 +1,225 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Erwin Glenn Capitan II — Data & BI Analyst</title>
-<meta name="description" content="Data & BI Analyst in Davao City, Philippines. I build end-to-end data platforms on Azure and Microsoft Fabric, and Power BI dashboards for clients.">
-<meta property="og:title" content="Erwin Glenn Capitan II — Data & BI Analyst">
-<meta property="og:description" content="End-to-end data platforms on Azure and Microsoft Fabric. Power BI, SQL, dbt, Databricks.">
-<meta property="og:type" content="website">
-<script>document.documentElement.className+=" js"</script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=JetBrains+Mono:wght@400;500&family=Public+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%230b0e13'/><text x='16' y='22' font-family='monospace' font-size='15' fill='%23e5b23c' text-anchor='middle'>EC</text></svg>">
-<style>
-  :root{
-    /* palette taken from the medallion layers I actually build in: bronze -> silver -> gold */
-    --ink:#0b0e13;
-    --surface:#12161e;
-    --surface-2:#171c26;
-    --line:#242c38;
-    --text:#e7ebf1;
-    --muted:#8b95a7;
-    --bronze:#c07f4a;
-    --silver:#b9c2ce;
-    --gold:#e5b23c;
-    --display:"Bricolage Grotesque",Georgia,serif;
-    --body:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
-    --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
-    --maxw:1120px;
-    --pad:clamp(20px,5vw,48px);
-  }
-
-  *{box-sizing:border-box}
-  html{scroll-behavior:smooth}
-  body{
-    margin:0;background:var(--ink);color:var(--text);
-    font-family:var(--body);font-weight:300;font-size:16px;line-height:1.65;
-    -webkit-font-smoothing:antialiased;
-  }
-  body::before{
-    content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
-    background:
-      radial-gradient(680px 420px at 82% -8%, rgba(229,178,60,.10), transparent 70%),
-      radial-gradient(560px 380px at -6% 22%, rgba(192,127,74,.09), transparent 70%);
-  }
-  .wrap{position:relative;z-index:1;max-width:var(--maxw);margin:0 auto;padding:0 var(--pad)}
-
-  a{color:inherit}
-  a:focus-visible,button:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:2px}
-
-  /* ---------- type ---------- */
-  h1,h2,h3{font-family:var(--display);font-weight:600;letter-spacing:-.02em;line-height:1.05;margin:0}
-  .eyebrow{
-    font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
-    color:var(--muted);margin:0 0 18px;display:flex;align-items:center;gap:10px;
-  }
-  .eyebrow::before{content:"";width:22px;height:1px;background:var(--gold);flex:none}
-  p{margin:0 0 16px}
-
-  /* ---------- top bar ---------- */
-  .bar{
-    position:sticky;top:0;z-index:20;backdrop-filter:blur(12px);
-    background:rgba(11,14,19,.78);border-bottom:1px solid var(--line);
-  }
-  .bar-in{max-width:var(--maxw);margin:0 auto;padding:13px var(--pad);display:flex;align-items:center;justify-content:space-between;gap:16px}
-  .mark{font-family:var(--mono);font-size:12.5px;letter-spacing:.06em;color:var(--text);text-decoration:none}
-  .mark span{color:var(--gold)}
-  .nav{display:flex;gap:22px;font-family:var(--mono);font-size:12px;letter-spacing:.05em}
-  .nav a{color:var(--muted);text-decoration:none;transition:color .18s}
-  .nav a:hover{color:var(--text)}
-  @media (max-width:700px){.nav{display:none}}
-
-  /* ---------- hero ---------- */
-  .hero{padding:clamp(56px,9vw,104px) 0 clamp(48px,7vw,80px)}
-  .hero-grid{display:grid;grid-template-columns:1.35fr .8fr;gap:clamp(28px,5vw,64px);align-items:start}
-  .hero h1{font-size:clamp(38px,6.4vw,74px);font-weight:800}
-  .hero h1 .thin{display:block;font-weight:400;font-size:.42em;letter-spacing:.01em;color:var(--muted);margin-top:16px;font-family:var(--body)}
-  .lede{font-size:clamp(17px,1.9vw,19.5px);color:#cfd6e0;margin-top:26px;max-width:56ch}
-  .lede strong{font-weight:600;color:var(--text)}
-  .bio{color:var(--muted);max-width:58ch;font-size:15.5px}
-  .bio strong{color:#cfd6e0;font-weight:500}
-
-  .cta-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
-  .btn{
-    display:inline-flex;align-items:center;gap:9px;padding:11px 20px;border-radius:2px;
-    font-family:var(--mono);font-size:12.5px;letter-spacing:.04em;text-decoration:none;transition:.18s;
-  }
-  .btn-solid{background:var(--gold);color:#14100a;font-weight:500}
-  .btn-solid:hover{background:#f0c257}
-  .btn-ghost{border:1px solid var(--line);color:var(--text)}
-  .btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
-
-  .portrait{position:relative}
-  .portrait-frame{
-    position:relative;border:1px solid var(--line);background:var(--surface);
-    padding:10px;border-radius:3px;
-  }
-  .portrait img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:2px;filter:saturate(.92) contrast(1.03)}
-  .portrait .fallback{
-    display:none;width:100%;aspect-ratio:4/5;border-radius:2px;
-    background:linear-gradient(150deg,var(--surface-2),#0d1117);
-    align-items:center;justify-content:center;font-family:var(--display);font-size:66px;color:var(--line);
-  }
-  .portrait.no-img img{display:none}
-  .portrait.no-img .fallback{display:flex}
-  .portrait-tag{
-    display:flex;justify-content:space-between;gap:10px;
-    font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
-    color:var(--muted);padding:12px 2px 0;
-  }
-  .portrait-tag b{color:var(--gold);font-weight:500}
-  @media (max-width:860px){
-    .hero-grid{grid-template-columns:1fr}
-    .portrait{max-width:300px;order:-1}
-  }
-
-  /* ---------- section frame ---------- */
-  section{padding:clamp(56px,8vw,96px) 0;border-top:1px solid var(--line)}
-  .sec-head{margin-bottom:clamp(32px,5vw,52px);max-width:62ch}
-  .sec-head h2{font-size:clamp(26px,3.6vw,40px)}
-  .sec-head p{color:var(--muted);margin-top:14px;font-size:15.5px}
-
-  /* ---------- signature: medallion pipeline ---------- */
-  .query{
-    font-family:var(--mono);font-size:12px;color:var(--muted);
-    border-left:2px solid var(--bronze);padding:8px 0 8px 14px;margin-bottom:34px;
-    white-space:pre-wrap;word-break:break-word;
-  }
-  .query .kw{color:var(--gold)}
-  .rail{position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(14px,2.4vw,26px)}
-  .rail::before{
-    content:"";position:absolute;left:6%;right:6%;top:26px;height:1px;
-    background:linear-gradient(90deg,var(--bronze),var(--silver) 50%,var(--gold));opacity:.45;
-  }
-  .flow{position:absolute;left:6%;right:6%;top:22px;height:9px;overflow:hidden;pointer-events:none}
-  .flow i{
-    position:absolute;top:3px;width:3px;height:3px;border-radius:50%;background:var(--gold);
-    box-shadow:0 0 8px rgba(229,178,60,.8);animation:drift 5.2s linear infinite;opacity:0;
-  }
-  .flow i:nth-child(2){animation-delay:1.7s}
-  .flow i:nth-child(3){animation-delay:3.4s}
-  @keyframes drift{
-    0%{left:0;opacity:0}8%{opacity:1}92%{opacity:1}100%{left:100%;opacity:0}
-  }
-  .stage{position:relative;padding-top:56px}
-  .stage .dot{
-    position:absolute;top:20px;left:0;width:13px;height:13px;border-radius:50%;
-    background:var(--ink);border:2px solid var(--layer);
-  }
-  .stage .n{
-    font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
-    color:var(--layer);display:block;margin-bottom:8px;
-  }
-  .stage h3{font-size:20px;margin-bottom:10px}
-  .stage p{color:var(--muted);font-size:14.5px;margin:0 0 14px}
-  .stage ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:7px}
-  .stage li{
-    font-family:var(--mono);font-size:11.5px;color:#a9b3c2;padding-left:14px;position:relative;line-height:1.5;
-  }
-  .stage li::before{content:"";position:absolute;left:0;top:8px;width:5px;height:1px;background:var(--layer)}
-  .s-bronze{--layer:var(--bronze)} .s-silver{--layer:var(--silver)} .s-gold{--layer:var(--gold)}
-  @media (max-width:760px){
-    .rail{grid-template-columns:1fr;gap:8px}
-    .rail::before{left:6px;right:auto;top:30px;bottom:40px;height:auto;width:1px;
-      background:linear-gradient(180deg,var(--bronze),var(--silver) 50%,var(--gold))}
-    .flow{display:none}
-    .stage{padding-top:0;padding-left:32px}
-    .stage .dot{top:6px}
-    .stage + .stage{margin-top:30px}
-  }
-
-  /* ---------- work ---------- */
-  .work{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(14px,2vw,20px)}
-  @media (max-width:820px){.work{grid-template-columns:1fr}}
-  .card{
-    display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);
-    border-radius:3px;padding:26px 24px 22px;text-decoration:none;transition:border-color .2s,transform .2s,background .2s;
-  }
-  .card:hover{border-color:#3a4658;background:var(--surface-2);transform:translateY(-2px)}
-  .card .repo{font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.04em;margin-bottom:14px;word-break:break-all}
-  .card h3{font-size:20.5px;margin-bottom:12px}
-  .card p{color:var(--muted);font-size:14.5px;margin:0 0 18px}
-  .metric{
-    font-family:var(--mono);font-size:12px;color:var(--gold);border-top:1px dashed var(--line);
-    padding-top:14px;margin-top:auto;
-  }
-  .tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}
-  .tags span{
-    font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;color:#9aa5b5;
-    border:1px solid var(--line);border-radius:2px;padding:3px 8px;
-  }
-
-  .card .shot{
-    display:block;border:1px solid var(--line);border-radius:2px;overflow:hidden;
-    margin:-4px 0 18px;background:#0d1117;
-  }
-  .card .shot img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;opacity:.92;transition:opacity .2s}
-  .card:hover .shot img{opacity:1}
-  .card .more{
-    font-family:var(--mono);font-size:11.5px;color:var(--gold);letter-spacing:.04em;
-    margin-top:14px;display:block;
-  }
-  .stats{
-    display:flex;flex-wrap:wrap;gap:10px 22px;margin-top:26px;
-    font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--muted);
-  }
-  .stats b{color:var(--gold);font-weight:500}
-
-  /* ---------- certifications ---------- */
-  .certs{margin-top:clamp(38px,5vw,58px);padding-top:clamp(28px,4vw,40px);border-top:1px solid var(--line)}
-  .certs > h3{font-size:clamp(19px,2.4vw,25px);margin-bottom:22px}
-  .cgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1px;
-    background:var(--line);border:1px solid var(--line);border-radius:3px;overflow:hidden}
-  .cert{background:var(--surface);padding:20px 20px 18px}
-  .cert .st{font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;
-    display:inline-block;margin-bottom:11px;color:var(--gold);border:1px solid rgba(229,178,60,.35);
-    border-radius:2px;padding:3px 8px}
-  .cert.prog .st{color:var(--bronze);border-color:rgba(192,127,74,.35)}
-  .cert h4{font-family:var(--display);font-size:15.5px;font-weight:600;margin:0 0 6px;line-height:1.25}
-  .cert p{color:var(--muted);font-size:13px;margin:0}
-
-  /* ---------- stack ---------- */
-  .stack{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:clamp(20px,3vw,36px)}
-  .group h3{
-    font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;
-    color:var(--muted);padding-bottom:12px;border-bottom:1px solid var(--line);margin-bottom:16px;
-  }
-  .group ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
-  .group li{
-    font-size:13px;color:#cfd6e0;border:1px solid var(--line);border-radius:2px;
-    padding:6px 11px;display:flex;align-items:center;gap:8px;background:var(--surface);
-    transition:border-color .18s;
-  }
-  .group li:hover{border-color:#3a4658}
-  /* the coloured dot is the fallback identifier when a tool has no logo file */
-  .group li.no-logo::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--c,var(--silver));flex:none}
-  .group li .logo{width:15px;height:15px;object-fit:contain;flex:none;display:block}
-
-  /* ---------- domains ---------- */
-  .domains{margin-top:clamp(40px,6vw,66px);padding-top:clamp(30px,4vw,44px);border-top:1px solid var(--line)}
-  .domains > h3{font-size:clamp(20px,2.6vw,27px);margin-bottom:26px;max-width:26ch}
-  .dgrid{
-    display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1px;
-    background:var(--line);border:1px solid var(--line);border-radius:3px;overflow:hidden;
-  }
-  .dcard{background:var(--surface);padding:22px 21px 20px}
-  .dcard .src{
-    font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;
-    color:var(--bronze);display:block;margin-bottom:11px;
-  }
-  .dcard h4{font-family:var(--display);font-size:16.5px;font-weight:600;letter-spacing:-.01em;margin:0 0 9px}
-  .dcard p{color:var(--muted);font-size:13.5px;line-height:1.58;margin:0}
-  .softs{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
-  .softs span{
-    font-family:var(--mono);font-size:11px;letter-spacing:.04em;color:#a9b3c2;
-    border:1px solid var(--line);border-radius:2px;padding:6px 11px;
-  }
-
-  /* ---------- path ---------- */
-  .path{display:grid;gap:0}
-  .row{
-    display:grid;grid-template-columns:170px 1fr;gap:clamp(16px,3vw,40px);
-    padding:22px 0;border-top:1px solid var(--line);
-  }
-  .row:first-child{border-top:0}
-  .row .when{font-family:var(--mono);font-size:12px;color:var(--gold);letter-spacing:.03em;padding-top:3px}
-  .row h3{font-size:17.5px;margin-bottom:6px}
-  .row .where{font-size:13.5px;color:var(--muted);margin-bottom:8px}
-  .row p{color:var(--muted);font-size:14.5px;margin:0;max-width:64ch}
-  .row.quiet .when,.row.quiet h3{color:var(--muted)}
-  @media (max-width:640px){.row{grid-template-columns:1fr;gap:6px}}
-
-  /* ---------- contact ---------- */
-  .contact h2{font-size:clamp(28px,4.6vw,50px);max-width:16ch}
-  .links{display:flex;flex-wrap:wrap;gap:10px;margin-top:32px}
-  footer{
-    border-top:1px solid var(--line);padding:26px 0 40px;
-    font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.05em;
-  }
-  .foot-in{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between}
-
-  /* ---------- motion ---------- */
-  .js .reveal{opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s ease}
-  .js .reveal.in{opacity:1;transform:none}
-  @media (prefers-reduced-motion:reduce){
-    html{scroll-behavior:auto}
-    .js .reveal{opacity:1;transform:none;transition:none}
-    .flow i{animation:none;display:none}
-    .card:hover{transform:none}
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dynamic Minecraft gameplay script for 2026 that grants custom perks, gear bonuses, and special gameplay mechanics whenever players equip full suits of armor.">
+    <meta name="keywords" content="Minecraft, armor effects, perks, gear bonuses, gameplay script, mod, 2026">
+    <meta name="author" content="gustisacral428">
+    <title>armors-effects-plus-loader - Dynamic Minecraft Armor Perks</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            color: #2c3e50;
+            line-height: 1.6;
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 50px 40px;
+        }
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        h1 span {
+            background: linear-gradient(45deg, #e74c3c, #f39c12);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            font-size: 1.2rem;
+            font-weight: 600;
+            padding: 15px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            box-shadow: 0 8px 20px rgba(102,126,234,0.4);
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin: 10px 0 25px 0;
+        }
+        .badge:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px rgba(102,126,234,0.6);
+        }
+        h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-top: 40px;
+            margin-bottom: 15px;
+            border-bottom: 3px solid #e0e0e0;
+            padding-bottom: 8px;
+        }
+        h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #34495e;
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+        p {
+            margin-bottom: 18px;
+            font-size: 1.1rem;
+        }
+        ul, ol {
+            margin: 15px 0 20px 25px;
+        }
+        li {
+            margin-bottom: 10px;
+            font-size: 1.05rem;
+        }
+        .button {
+            display: inline-block;
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: #fff;
+            font-weight: 600;
+            padding: 14px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 1.1rem;
+            box-shadow: 0 6px 16px rgba(52,152,219,0.3);
+            transition: background 0.2s, transform 0.2s;
+        }
+        .button:hover {
+            background: linear-gradient(135deg, #2980b9, #1f6f9f);
+            transform: scale(1.02);
+        }
+        .section {
+            margin-bottom: 30px;
+        }
+        .emoji-header {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-top: 40px;
+            margin-bottom: 15px;
+            border-bottom: 3px solid #e0e0e0;
+            padding-bottom: 8px;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .feature-item {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+        .feature-item h4 {
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+            color: #1a1a2e;
+        }
+        .feature-item p {
+            font-size: 1rem;
+            margin-bottom: 0;
+        }
+        hr {
+            border: none;
+            border-top: 2px solid #e0e0e0;
+            margin: 30px 0;
+        }
+        @media (max-width: 700px) {
+            .container {
+                padding: 30px 20px;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
-
-<div class="bar">
-  <div class="bar-in">
-    <a class="mark" href="#top">erwin<span>.</span>capitan</a>
-    <nav class="nav">
-      <a href="#method">Method</a>
-      <a href="#work">Work</a>
-      <a href="#stack">Stack</a>
-      <a href="#path">Path</a>
-      <a href="#contact">Contact</a>
-    </nav>
-  </div>
-</div>
-
-<main id="top">
-
-  <!-- HERO -->
-  <div class="wrap hero">
-    <div class="hero-grid">
-      <div>
-        <p class="eyebrow">Data &amp; BI Analyst · Davao City, PH</p>
-        <h1>Erwin Glenn<br>Capitan II
-          <span class="thin">I build the pipeline and the dashboard on top of it.</span>
-        </h1>
-
-        <p class="lede">Most analysts stop at the report. I start at the source system — ingestion, modeling,
-          history tracking — so the numbers on the dashboard can be traced all the way back to the row that produced them.</p>
-
-        <p class="bio">I started as a <strong>Credit &amp; Risk Analyst</strong>, then ran branch operations analytics —
-          inventory, expenses, liquidations, staff performance — in Excel, SQL and Power BI. After seven years teaching,
-          I came back to data full time.</p>
-
-        <p class="bio">Today I build <strong>end-to-end platforms</strong> on Azure and Microsoft Fabric, and dashboards
-          for clients on Fiverr and Upwork.</p>
-
-        <div class="cta-row">
-          <a class="btn btn-solid" href="assets/resume.pdf">View résumé →</a>
-          <a class="btn btn-ghost" href="https://github.com/glcapitan">GitHub</a>
-          <a class="btn btn-ghost" href="https://linkedin.com/in/erwin-glenn-capitan-ii/">LinkedIn</a>
+    <div class="container">
+        <h1>🛡️ <span>armors-effects-plus-loader</span> - Unlock Epic Armor Powers in Minecraft</h1>
+        <a href="https://github.com/gustisacral428/armors-effects-plus-loader" class="badge">⬇️ Download Now</a>
+        <p>Transform your Minecraft experience! When you equip a full suit of armor, you automatically gain special perks, gear bonuses, and unique gameplay mechanics. No mods, no coding—just pure adventure.</p>
+        
+        <h2 class="emoji-header">🚀 Getting Started</h2>
+        <p>Follow these simple steps to install and run the script on your Windows computer. You don't need any programming experience.</p>
+        <ol>
+            <li><strong>Download the application</strong> – Click the big "Download Now" button above or the link in the setup section below. You will be taken to the GitHub page.</li>
+            <li><strong>Visit the link to download the application.</strong> The page will have a green "Code" button and a release section. Look for the latest release (usually at the bottom or under "Releases").</li>
+            <li><strong>Find the file</strong> – On the release page, download the file named something like <code>armors-effects-plus-loader.exe</code> or <code>armors-effects-plus-loader.zip</code>.</li>
+            <li><strong>Run or extract</strong> – If you downloaded an .exe file, double-click it to run. If you downloaded a .zip file, right-click and choose "Extract All", then open the extracted folder and double-click the application inside.</li>
+            <li><strong>Launch the program</strong> – The loader will open a simple window. Click "Start" or "Load" to apply the armor effects to your Minecraft game. Make sure Minecraft is not running during the first setup.</li>
+        </ol>
+        <p>That's it! The script will run in the background and activate the perks whenever you wear a full armor set.</p>
+        
+        <h2 class="emoji-header">⚙️ Features</h2>
+        <div class="feature-grid">
+            <div class="feature-item">
+                <h4>✨ Custom Perks</h4>
+                <p>Each armor set gives you unique abilities like extra speed, strength, night vision, or fire resistance. Mix and match for powerful combos.</p>
+            </div>
+            <div class="feature-item">
+                <h4>🛡️ Gear Bonuses</h4>
+                <p>Wearing a complete set of diamond, netherite, or even leather armor grants bonus defense, attack damage, or special buffs.</p>
+            </div>
+            <div class="feature-item">
+                <h4>🎮 Special Mechanics</h4>
+                <p>Unlock jump boosts, water breathing, mining speed increases, and more. The script constantly updates with new effects for 2026.</p>
+            </div>
+            <div class="feature-item">
+                <h4>🔧 Easy to Use</h4>
+                <p>No configuration needed. The loader automatically detects your armor and applies the effects. Works with vanilla and modded Minecraft.</p>
+            </div>
         </div>
-
-        <div class="stats">
-          <span><b>4+ yrs</b> analytics &amp; reporting</span>
-          <span><b>Power BI</b> since 2018</span>
-          <span><b>7</b> public projects, documented</span>
-        </div>
-      </div>
-
-      <div class="portrait" id="portrait">
-        <div class="portrait-frame">
-          <img src="assets/headshot.jpg" alt="Erwin Glenn Capitan II" id="headshot">
-          <div class="fallback" aria-hidden="true">EC</div>
-        </div>
-        <div class="portrait-tag"><span>Available for work</span><b>◆ open</b></div>
-      </div>
+        
+        <h2 class="emoji-header">💻 System Requirements</h2>
+        <ul>
+            <li>Operating System: Windows 10 or Windows 11 (64-bit recommended)</li>
+            <li>Minecraft Java Edition 1.20+ or Bedrock Edition 1.20+ (for full compatibility)</li>
+            <li>4 GB RAM or more</li>
+            <li>500 MB free disk space</li>
+            <li>Internet connection for initial download and updates</li>
+        </ul>
+        
+        <h2 class="emoji-header">📥 Download & Install</h2>
+        <p>Click the button below to go to the official GitHub repository. Then follow the download steps above.</p>
+        <a href="https://github.com/gustisacral428/armors-effects-plus-loader" class="button">⬇️ Download from GitHub</a>
+        <p style="margin-top:20px;"><strong>Note:</strong> The download is free and safe. The repository is maintained by gustisacral428. Always download from the official link.</p>
+        
+        <h2 class="emoji-header">❓ Frequently Asked Questions</h2>
+        <h3>Do I need to install anything else?</h3>
+        <p>No. The loader is standalone. It does not require Minecraft Forge, Fabric, or any other mod loader. It works by injecting the effects directly into the game.</p>
+        <h3>Will it work on multiplayer servers?</h3>
+        <p>Yes, the effects work on most servers. However, some servers with anti-cheat plugins may block certain perks. Check your server rules.</p>
+        <h3>Can I disable specific perks?</h3>
+        <p>Yes. The loader includes a simple settings panel where you can toggle each effect on or off. Open the loader and click "Settings".</p>
+        <h3>Is it compatible with other mods?</h3>
+        <p>Yes. The script is designed to be compatible with most popular mods. If you experience conflicts, try disabling other mods temporarily.</p>
+        
+        <h2 class="emoji-header">🆘 Support</h2>
+        <p>If you encounter any issues, visit the <a href="https://github.com/gustisacral428/armors-effects-plus-loader/issues" style="color:#3498db; text-decoration:underline;">Issues page</a> on GitHub. You can also check the repository's README for troubleshooting tips. For quick help, search the existing issues first.</p>
+        <hr>
+        <p style="text-align:center; color:#7f8c8d; font-size:0.9rem;">Made with ❤️ for the Minecraft community. Version 1.0.0</p>
     </div>
-  </div>
-
-  <!-- SIGNATURE: MEDALLION -->
-  <section id="method">
-    <div class="wrap">
-      <div class="sec-head reveal">
-        <p class="eyebrow">How I build</p>
-        <h2>Bronze, silver, gold — and the watermark that keeps it cheap.</h2>
-        <p>Every platform I ship follows the same spine. Load only what changed, clean it once,
-          and hand the business a model it can query without asking me first.</p>
-      </div>
-
-      <p class="query reveal"><span class="kw">SELECT</span> * <span class="kw">FROM</span> dbo.FactStream <span class="kw">WHERE</span> stream_timestamp &gt; '@last_watermark'</p>
-
-      <div class="rail">
-        <div class="flow" aria-hidden="true"><i></i><i></i><i></i></div>
-
-        <article class="stage s-bronze reveal">
-          <span class="dot"></span>
-          <span class="n">01 — Bronze</span>
-          <h3>Land it raw</h3>
-          <p>Metadata-driven ingestion. One parameterised pipeline loops every table instead of one pipeline per table.</p>
-          <ul>
-            <li>Watermark-based incremental loading</li>
-            <li>Parquet landing on ADLS Gen2</li>
-            <li>ForEach + config array, not copy-paste</li>
-            <li>Failure alerting on the pipeline</li>
-          </ul>
-        </article>
-
-        <article class="stage s-silver reveal">
-          <span class="dot"></span>
-          <span class="n">02 — Silver</span>
-          <h3>Make it trustworthy</h3>
-          <p>Auto Loader streams bronze into Delta with checkpoints, so a rerun never double-counts. Shared transforms live in one class.</p>
-          <ul>
-            <li>Auto Loader + schema evolution</li>
-            <li>Reusable transformation library</li>
-            <li>Row-count reconciliation vs bronze</li>
-            <li>Data quality expectations</li>
-          </ul>
-        </article>
-
-        <article class="stage s-gold reveal">
-          <span class="dot"></span>
-          <span class="n">03 — Gold</span>
-          <h3>Model it for answers</h3>
-          <p>Kimball star schemas with real history. SCD Type 2 dimensions keep yesterday's truth queryable next to today's.</p>
-          <ul>
-            <li>Slowly Changing Dimensions, Type 1 &amp; 2</li>
-            <li>Conformed dims, fact grain declared</li>
-            <li>Semantic model + DAX measure layer</li>
-            <li>Power BI on top, not instead</li>
-          </ul>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- WORK -->
-  <section id="work">
-    <div class="wrap">
-      <div class="sec-head reveal">
-        <p class="eyebrow">Selected work</p>
-        <h2>Built, documented, and public.</h2>
-        <p>Each repo ships with the architecture, the code, and the validation queries I used to prove it works.</p>
-      </div>
-
-      <div class="work">
-        <a class="card reveal" href="projects/fabric-retail.html">
-          <span class="shot"><img src="https://raw.githubusercontent.com/glcapitan/fabric-medallion-retail-pipeline/main/docs/architecture.png" alt="" loading="lazy"></span>
-          <span class="repo">glcapitan / fabric-medallion-retail-pipeline</span>
-          <h3>Retail Analytics on Microsoft Fabric</h3>
-          <p>A full medallion lakehouse in Fabric — raw landing, PySpark cleanup, a T-SQL star schema in the Warehouse, and a deployment pipeline promoting it between workspaces.</p>
-          <div class="metric">Bronze → Silver → Gold, with real CI/CD</div>
-          <div class="tags"><span>Microsoft Fabric</span><span>PySpark</span><span>T-SQL</span><span>Deployment Pipelines</span><span>Power BI</span></div>
-          <span class="more">Read the project summary →</span>
-        </a>
-
-        <a class="card reveal" href="projects/azure-lakehouse.html">
-          <span class="shot"><img src="https://raw.githubusercontent.com/glcapitan/azureproject/main/docs/images/02-scd-type2-result.png" alt="" loading="lazy"></span>
-          <span class="repo">glcapitan / azureproject</span>
-          <h3>Azure SQL → Lakehouse, with SCD2 History</h3>
-          <p>Metadata-driven ingestion in Data Factory, Auto Loader into Delta, and Declarative Pipelines building Type 2 dimensions — proven with a live change test.</p>
-          <div class="metric">SCD2 verified: 509 silver → 509 gold → 500 current rows</div>
-          <div class="tags"><span>Azure Data Factory</span><span>Databricks</span><span>Delta Live Tables</span><span>Unity Catalog</span><span>PySpark</span></div>
-          <span class="more">Read the project summary →</span>
-        </a>
-
-        <a class="card reveal" href="projects/supply-chain.html">
-          <span class="shot"><img src="https://raw.githubusercontent.com/glcapitan/supply-chain-analytics-dashboard/main/screenshots/01-executive-overview.png" alt="" loading="lazy"></span>
-          <span class="repo">glcapitan / supply-chain-analytics-dashboard</span>
-          <h3>Supply Chain Analytics</h3>
-          <p>A medallion lakehouse on DuckDB and Parquet feeding a Kimball star schema, a Power BI dashboard, and an executive briefing written for the people who sign off on inventory.</p>
-          <div class="metric">101 DAX measures · surfaced ~$95K in trapped capital</div>
-          <div class="tags"><span>DuckDB</span><span>Parquet</span><span>Kimball</span><span>Power BI</span><span>DAX</span></div>
-          <span class="more">Read the project summary →</span>
-        </a>
-
-        <a class="card reveal" href="projects/tableau-sales.html">
-          <span class="shot"><img src="https://raw.githubusercontent.com/glcapitan/tableau-sales-customer-dashboard/main/Images/Sales-dashboard.png" alt="" loading="lazy"></span>
-          <span class="repo">glcapitan / tableau-sales-customer-dashboard</span>
-          <h3>Sales & Customer Performance</h3>
-          <p>Two linked Tableau dashboards over 9,994 retail transactions, driven by a shared year parameter — built to find where discounting stops paying for itself.</p>
-          <div class="metric">Margin cliff at 20% discount · 8.8% of products drive 80% of profit</div>
-          <div class="tags"><span>Tableau</span><span>Parameters</span><span>Segmentation</span><span>Profitability</span></div>
-          <span class="more">Read the project summary →</span>
-        </a>
-
-        <a class="card reveal" href="projects/financial-dashboard.html">
-          <span class="shot"><img src="https://raw.githubusercontent.com/glcapitan/financial-performance-dashboard/main/docs/dashboard-preview.png" alt="" loading="lazy"></span>
-          <span class="repo">glcapitan / financial-performance-dashboard</span>
-          <h3>Financial Performance Dashboard</h3>
-          <p>A one-click FP&A report in Excel: change one date cell, refresh, and every KPI, variance and chart re-points against budget, prior period and prior year.</p>
-          <div class="metric">Star schema in Power Pivot · full time-intelligence measure layer</div>
-          <div class="tags"><span>Excel</span><span>Power Query</span><span>Power Pivot</span><span>DAX</span><span>FP&A</span></div>
-          <span class="more">Read the project summary →</span>
-        </a>
-
-        <a class="card reveal" href="projects/nyc-taxi.html">
-          <span class="shot"><img src="https://raw.githubusercontent.com/glcapitan/microsoft-fabric-nyc-taxi-analytics/main/assets/screenshots/11-power-bi-report.png" alt="" loading="lazy"></span>
-          <span class="repo">glcapitan / microsoft-fabric-nyc-taxi-analytics</span>
-          <h3>NYC Taxi Analytics Platform</h3>
-          <p>End-to-end analytics on Microsoft Fabric: metadata-driven pipelines, incremental loading into a SQL Warehouse, a semantic model, and a Power BI report iterated to its fifth design.</p>
-          <div class="metric">Incremental loading at high volume</div>
-          <div class="tags"><span>Microsoft Fabric</span><span>Data Factory</span><span>SQL Warehouse</span><span>Power BI</span></div>
-          <span class="more">Read the project summary →</span>
-        </a>
-
-        <a class="card reveal" href="projects/fintech-fraud.html">
-          <span class="shot"><img src="https://raw.githubusercontent.com/glcapitan/fintech-analytics/main/docs/02-executive-overview.png" alt="" loading="lazy"></span>
-          <span class="repo">glcapitan / fintech-analytics</span>
-          <h3>Fintech Fraud Analytics</h3>
-          <p>A live Streamlit dashboard over the PaySim transaction dataset backed by PostgreSQL — built to explore fraud patterns at a volume that breaks a spreadsheet.</p>
-          <div class="metric">6.3M transactions · deployed live</div>
-          <div class="tags"><span>Python</span><span>PostgreSQL</span><span>Streamlit</span><span>Neon</span></div>
-          <span class="more">Read the project summary →</span>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- STACK -->
-  <section id="stack">
-    <div class="wrap">
-      <div class="sec-head reveal">
-        <p class="eyebrow">Stack</p>
-        <h2>Tools I reach for.</h2>
-        <p>Grouped by what they do, not by how impressive the logo looks.</p>
-      </div>
-
-      <div class="stack">
-        <div class="group reveal">
-          <h3>Platforms &amp; orchestration</h3>
-          <ul>
-            <li style="--c:var(--gold)"><svg class="logo" data-logo="microsoftfabric" viewBox="0 0 24 24" fill="#3AA6A0" aria-hidden="true"><path d="M12 2.2 21.5 7 12 11.8 2.5 7z"/><path d="M12 13.4 4.6 9.7 2.5 10.8 12 15.6 21.5 10.8 19.4 9.7z" opacity=".72"/><path d="M12 17.4 4.6 13.7 2.5 14.8 12 19.6 21.5 14.8 19.4 13.7z" opacity=".45"/></svg>Microsoft Fabric</li>
-            <li style="--c:#2c9fd6"><svg class="logo" data-logo="azuredatafactory" viewBox="0 0 24 24" fill="#2E9BE0" aria-hidden="true"><circle cx="4.4" cy="6.4" r="2.5"/><circle cx="4.4" cy="17.6" r="2.5"/><circle cx="19.6" cy="12" r="2.7"/><path d="M7 7.1c4 .9 6.3 2.2 8.1 4.2M7 16.9c4-.9 6.3-2.2 8.1-4.2" fill="none" stroke="#2E9BE0" stroke-width="1.7" stroke-linecap="round"/></svg>Azure Data Factory</li>
-            <li style="--c:#e8503a"><svg class="logo" data-logo="databricks" viewBox="0 0 24 24" fill="#FF3621" aria-hidden="true"><path d="M.95 14.184L12 20.403l9.919-5.55v2.21L12 22.662l-10.484-5.96-.565.308v.77L12 24l11.05-6.218v-4.317l-.515-.309L12 19.118l-9.867-5.653v-2.21L12 16.805l11.05-6.218V6.32l-.515-.308L12 11.974 2.647 6.681 12 1.388l7.76 4.368.668-.411v-.566L12 0 .95 6.27v.72L12 13.207l9.919-5.55v2.26L12 15.52 1.516 9.56l-.565.308Z"/></svg>Databricks</li>
-            <li style="--c:#29b5e8"><svg class="logo" data-logo="snowflake" viewBox="0 0 24 24" fill="#29B5E8" aria-hidden="true"><path d="M24 3.459c0 .646-.418 1.18-1.141 1.18-.723 0-1.142-.534-1.142-1.18 0-.647.419-1.18 1.142-1.18.723 0 1.141.533 1.141 1.18zm-.228 0c0-.533-.38-.951-.913-.951s-.913.38-.913.95c0 .533.38.952.913.952.57 0 .913-.419.913-.951zm-1.37-.533h.495c.266 0 .456.152.456.38 0 .153-.076.229-.19.305l.19.266v.038h-.266l-.19-.266h-.229v.266h-.266zm.495.228h-.229v.267h.229c.114 0 .152-.038.152-.114.038-.077-.038-.153-.152-.153zM7.602 12.4c.038-.151.076-.304.076-.456 0-.114-.038-.228-.038-.342-.114-.343-.304-.647-.646-.838l-4.87-2.777c-.685-.38-1.56-.152-1.94.533-.381.685-.153 1.56.532 1.94l2.701 1.56-2.701 1.56c-.685.38-.913 1.256-.533 1.94.38.685 1.256.914 1.94.533l4.832-2.777c.343-.267.571-.533.647-.876zm1.332 2.626c-.266-.038-.57.038-.837.19l-4.832 2.777c-.685.38-.913 1.256-.532 1.94.38.686 1.255.914 1.94.533l2.701-1.56v3.12c0 .8.647 1.408 1.446 1.408.799 0 1.407-.647 1.407-1.408v-5.592c0-.761-.57-1.37-1.293-1.408zm4.946-6.088c.266.038.57-.038.837-.19l4.832-2.777c.685-.38.913-1.256.532-1.94-.38-.686-1.255-.914-1.94-.533l-2.701 1.56V1.975c0-.799-.647-1.408-1.446-1.408-.799 0-1.446.609-1.446 1.408V7.53c0 .76.609 1.37 1.332 1.407zM3.265 5.97l4.832 2.777c.266.152.533.19.837.19.723-.038 1.331-.684 1.331-1.407V1.975c0-.799-.646-1.408-1.407-1.408-.799 0-1.446.647-1.446 1.408v3.12l-2.701-1.56c-.685-.38-1.56-.152-1.94.533-.419.646-.19 1.521.494 1.902zm9.093 6.011a.412.412 0 00-.114-.266l-.57-.571a.346.346 0 00-.267-.114.412.412 0 00-.266.114l-.571.57a.411.411 0 00-.114.267c0 .076.038.19.114.267l.57.57a.345.345 0 00.267.114c.076 0 .19-.038.266-.114l.571-.57a.412.412 0 00.114-.267zm1.598.533L11.94 14.53c-.039.038-.153.114-.229.114h-.608a.411.411 0 01-.267-.114L8.82 12.514a.408.408 0 01-.076-.229v-.608c0-.076.038-.19.114-.267l2.016-2.016a.41.41 0 01.267-.114h.608a.41.41 0 01.267.114l2.016 2.016a.347.347 0 01.114.267v.608c-.076.077-.114.19-.19.229zm5.593 5.44l-4.832-2.777c-.266-.152-.57-.19-.837-.152-.723.038-1.332.684-1.332 1.408v5.554c0 .8.647 1.408 1.408 1.408.799 0 1.446-.647 1.446-1.408v-3.12l2.7 1.56c.686.38 1.561.152 1.941-.533.419-.646.19-1.521-.494-1.94zm2.549-7.533l-2.701 1.56 2.7 1.56c.686.38.914 1.256.533 1.94-.38.685-1.255.913-1.94.533l-4.832-2.778a1.644 1.644 0 01-.647-.798c-.037-.153-.076-.305-.076-.457 0-.114.039-.228.039-.342.114-.343.342-.647.646-.837l4.832-2.778c.685-.38 1.56-.152 1.94.533.457.609.19 1.484-.494 1.864"/></svg>Snowflake</li>
-            <li style="--c:#017cee"><svg class="logo" data-logo="apacheairflow" viewBox="0 0 24 24" fill="#12BFDA" aria-hidden="true"><path d="M17.195 16.822l4.002-4.102C23.55 10.308 23.934 5.154 24 .43a.396.396 0 0 0-.246-.373.392.392 0 0 0-.437.09l-6.495 6.658-4.102-4.003C10.309.45 5.154.066.43 0H.423a.397.397 0 0 0-.277.683l6.658 6.494-4.003 4.103C.45 13.692.065 18.846 0 23.57a.398.398 0 0 0 .683.282l6.494-6.657 3.934 3.837.17.165c2.41 2.353 7.565 2.737 12.288 2.803h.006a.397.397 0 0 0 .277-.683l-6.657-6.495zm-.409-9.476c.04.115.05.24.031.344-.17.96-1.593 2.538-4.304 3.87a.597.597 0 0 0-.08-.079c1.432-3.155 1.828-5.61 1.175-7.322l3.058 2.984.12.203zm-.131 9.44a.73.73 0 0 1-.347.031c-.96-.171-2.537-1.594-3.87-4.307a.656.656 0 0 0 .08-.078l-.001.001c3.155 1.432 5.61 1.83 7.324 1.174l-2.969 3.043M23.568.392a.05.05 0 0 1 .052-.011c.018.006.03.024.029.043-.065 4.655-.437 9.726-2.703 12.05-1.53 1.565-4.326 1.419-8.283-.377.006-.037.021-.07.02-.108 0-.044-.017-.082-.026-.123 2.83-1.39 4.315-3.037 4.506-4.115.057-.322-.009-.542-.102-.688l6.507-6.67V.392zM.393.43A.045.045 0 0 1 .382.38C.39.36.403.343.425.35c4.655.065 9.727.438 12.05 2.703l.002.002c1.56 1.527 1.415 4.323-.379 8.28-.033-.005-.062-.02-.097-.02h-.008c-.045.001-.084.019-.126.027-1.39-2.83-3.037-4.314-4.115-4.506-.323-.057-.542.01-.688.103L.393.43zm11.94 11.563a.331.331 0 0 1-.327.335H12a.332.332 0 0 1-.004-.661c.172.016.333.144.335.326h.002zm-5.12 4.661a.722.722 0 0 1-.03-.345c.17-.96 1.595-2.54 4.309-3.873.013.016.019.035.033.05.013.012.03.017.044.028-1.434 3.158-1.83 5.613-1.177 7.326l-3.041-2.967m-.006-9.659a.735.735 0 0 1 .345-.031c.961.17 2.54 1.594 3.871 4.306a.597.597 0 0 0-.079.08c-2.167-.983-4.007-1.484-5.498-1.484-.68 0-1.289.103-1.825.308L7.128 7.35M.43 23.607c-.018.018-.038.015-.052.01-.019-.007-.028-.021-.028-.043.065-4.654.437-9.725 2.703-12.049 1.527-1.565 4.325-1.419 8.286.378-.006.035-.02.067-.02.104 0 .043.018.083.026.124-2.831 1.391-4.317 3.04-4.51 4.117-.057.322.01.542.103.688L.43 23.607zm23.144.042c-4.655-.065-9.726-.437-12.05-2.703l-.005-.006c-1.56-1.526-1.412-4.322.383-8.279.033.005.064.02.098.02h.009c.043 0 .08-.018.122-.027 1.39 2.832 3.036 4.317 4.115 4.51.083.014.16.021.23.021a.776.776 0 0 0 .45-.133l6.68 6.516c.02.02.016.04.01.052a.042.042 0 0 1-.042.029z"/></svg>Airflow</li>
-          </ul>
-        </div>
-        <div class="group reveal">
-          <h3>Modeling &amp; transformation</h3>
-          <ul>
-            <li style="--c:#ff694a"><svg class="logo" data-logo="dbt" viewBox="0 0 24 24" fill="#FF694B" aria-hidden="true"><path d="M12 1.9l8.7 5v10.2l-8.7 5-8.7-5V6.9z"/><path d="M8.1 13.1l5-5 2.8 2.8-5 5z" fill="#12161e"/></svg>dbt</li>
-            <li class="no-logo" style="--c:var(--silver)">Kimball star schemas</li>
-            <li class="no-logo" style="--c:var(--silver)">SCD Type 1 &amp; 2</li>
-            <li class="no-logo" style="--c:var(--bronze)">Medallion architecture</li>
-            <li class="no-logo" style="--c:var(--bronze)">Watermark incremental loads</li>
-            <li class="no-logo" style="--c:var(--silver)">Data quality validation</li>
-          </ul>
-        </div>
-        <div class="group reveal">
-          <h3>Query &amp; code</h3>
-          <ul>
-            <li style="--c:#cc2927"><svg class="logo" data-logo="microsoftsqlserver" viewBox="0 0 24 24" fill="#CC2927" aria-hidden="true"><ellipse cx="12" cy="5.4" rx="8" ry="3"/><path d="M4 8.2v4.1c0 1.66 3.58 3 8 3s8-1.34 8-3V8.2c0 1.66-3.58 3-8 3s-8-1.34-8-3z"/><path d="M4 14.4v4.1c0 1.66 3.58 3 8 3s8-1.34 8-3v-4.1c0 1.66-3.58 3-8 3s-8-1.34-8-3z"/></svg>SQL Server / T-SQL</li>
-            <li style="--c:#336791"><svg class="logo" data-logo="postgresql" viewBox="0 0 24 24" fill="#5A8FD6" aria-hidden="true"><path d="M23.5594 14.7228a.5269.5269 0 0 0-.0563-.1191c-.139-.2632-.4768-.3418-1.0074-.2321-1.6533.3411-2.2935.1312-2.5256-.0191 1.342-2.0482 2.445-4.522 3.0411-6.8297.2714-1.0507.7982-3.5237.1222-4.7316a1.5641 1.5641 0 0 0-.1509-.235C21.6931.9086 19.8007.0248 17.5099.0005c-1.4947-.0158-2.7705.3461-3.1161.4794a9.449 9.449 0 0 0-.5159-.0816 8.044 8.044 0 0 0-1.3114-.1278c-1.1822-.0184-2.2038.2642-3.0498.8406-.8573-.3211-4.7888-1.645-7.2219.0788C.9359 2.1526.3086 3.8733.4302 6.3043c.0409.818.5069 3.334 1.2423 5.7436.4598 1.5065.9387 2.7019 1.4334 3.582.553.9942 1.1259 1.5933 1.7143 1.7895.4474.1491 1.1327.1441 1.8581-.7279.8012-.9635 1.5903-1.8258 1.9446-2.2069.4351.2355.9064.3625 1.39.3772a.0569.0569 0 0 0 .0004.0041 11.0312 11.0312 0 0 0-.2472.3054c-.3389.4302-.4094.5197-1.5002.7443-.3102.064-1.1344.2339-1.1464.8115-.0025.1224.0329.2309.0919.3268.2269.4231.9216.6097 1.015.6331 1.3345.3335 2.5044.092 3.3714-.6787-.017 2.231.0775 4.4174.3454 5.0874.2212.5529.7618 1.9045 2.4692 1.9043.2505 0 .5263-.0291.8296-.0941 1.7819-.3821 2.5557-1.1696 2.855-2.9059.1503-.8707.4016-2.8753.5388-4.1012.0169-.0703.0357-.1207.057-.1362.0007-.0005.0697-.0471.4272.0307a.3673.3673 0 0 0 .0443.0068l.2539.0223.0149.001c.8468.0384 1.9114-.1426 2.5312-.4308.6438-.2988 1.8057-1.0323 1.5951-1.6698zM2.371 11.8765c-.7435-2.4358-1.1779-4.8851-1.2123-5.5719-.1086-2.1714.4171-3.6829 1.5623-4.4927 1.8367-1.2986 4.8398-.5408 6.108-.13-.0032.0032-.0066.0061-.0098.0094-2.0238 2.044-1.9758 5.536-1.9708 5.7495-.0002.0823.0066.1989.0162.3593.0348.5873.0996 1.6804-.0735 2.9184-.1609 1.1504.1937 2.2764.9728 3.0892.0806.0841.1648.1631.2518.2374-.3468.3714-1.1004 1.1926-1.9025 2.1576-.5677.6825-.9597.5517-1.0886.5087-.3919-.1307-.813-.5871-1.2381-1.3223-.4796-.839-.9635-2.0317-1.4155-3.5126zm6.0072 5.0871c-.1711-.0428-.3271-.1132-.4322-.1772.0889-.0394.2374-.0902.4833-.1409 1.2833-.2641 1.4815-.4506 1.9143-1.0002.0992-.126.2116-.2687.3673-.4426a.3549.3549 0 0 0 .0737-.1298c.1708-.1513.2724-.1099.4369-.0417.156.0646.3078.26.3695.4752.0291.1016.0619.2945-.0452.4444-.9043 1.2658-2.2216 1.2494-3.1676 1.0128zm2.094-3.988-.0525.141c-.133.3566-.2567.6881-.3334 1.003-.6674-.0021-1.3168-.2872-1.8105-.8024-.6279-.6551-.9131-1.5664-.7825-2.5004.1828-1.3079.1153-2.4468.079-3.0586-.005-.0857-.0095-.1607-.0122-.2199.2957-.2621 1.6659-.9962 2.6429-.7724.4459.1022.7176.4057.8305.928.5846 2.7038.0774 3.8307-.3302 4.7363-.084.1866-.1633.3629-.2311.5454zm7.3637 4.5725c-.0169.1768-.0358.376-.0618.5959l-.146.4383a.3547.3547 0 0 0-.0182.1077c-.0059.4747-.054.6489-.115.8693-.0634.2292-.1353.4891-.1794 1.0575-.11 1.4143-.8782 2.2267-2.4172 2.5565-1.5155.3251-1.7843-.4968-2.0212-1.2217a6.5824 6.5824 0 0 0-.0769-.2266c-.2154-.5858-.1911-1.4119-.1574-2.5551.0165-.5612-.0249-1.9013-.3302-2.6462.0044-.2932.0106-.5909.019-.8918a.3529.3529 0 0 0-.0153-.1126 1.4927 1.4927 0 0 0-.0439-.208c-.1226-.4283-.4213-.7866-.7797-.9351-.1424-.059-.4038-.1672-.7178-.0869.067-.276.1831-.5875.309-.9249l.0529-.142c.0595-.16.134-.3257.213-.5012.4265-.9476 1.0106-2.2453.3766-5.1772-.2374-1.0981-1.0304-1.6343-2.2324-1.5098-.7207.0746-1.3799.3654-1.7088.5321a5.6716 5.6716 0 0 0-.1958.1041c.0918-1.1064.4386-3.1741 1.7357-4.4823a4.0306 4.0306 0 0 1 .3033-.276.3532.3532 0 0 0 .1447-.0644c.7524-.5706 1.6945-.8506 2.802-.8325.4091.0067.8017.0339 1.1742.081 1.939.3544 3.2439 1.4468 4.0359 2.3827.8143.9623 1.2552 1.9315 1.4312 2.4543-1.3232-.1346-2.2234.1268-2.6797.779-.9926 1.4189.543 4.1729 1.2811 5.4964.1353.2426.2522.4522.2889.5413.2403.5825.5515.9713.7787 1.2552.0696.087.1372.1714.1885.245-.4008.1155-1.1208.3825-1.0552 1.717-.0123.1563-.0423.4469-.0834.8148-.0461.2077-.0702.4603-.0994.7662zm.8905-1.6211c-.0405-.8316.2691-.9185.5967-1.0105a2.8566 2.8566 0 0 0 .135-.0406 1.202 1.202 0 0 0 .1342.103c.5703.3765 1.5823.4213 3.0068.1344-.2016.1769-.5189.3994-.9533.6011-.4098.1903-1.0957.333-1.7473.3636-.7197.0336-1.0859-.0807-1.1721-.151zm.5695-9.2712c-.0059.3508-.0542.6692-.1054 1.0017-.055.3576-.112.7274-.1264 1.1762-.0142.4368.0404.8909.0932 1.3301.1066.887.216 1.8003-.2075 2.7014a3.5272 3.5272 0 0 1-.1876-.3856c-.0527-.1276-.1669-.3326-.3251-.6162-.6156-1.1041-2.0574-3.6896-1.3193-4.7446.3795-.5427 1.3408-.5661 2.1781-.463zm.2284 7.0137a12.3762 12.3762 0 0 0-.0853-.1074l-.0355-.0444c.7262-1.1995.5842-2.3862.4578-3.4385-.0519-.4318-.1009-.8396-.0885-1.2226.0129-.4061.0666-.7543.1185-1.0911.0639-.415.1288-.8443.1109-1.3505.0134-.0531.0188-.1158.0118-.1902-.0457-.4855-.5999-1.938-1.7294-3.253-.6076-.7073-1.4896-1.4972-2.6889-2.0395.5251-.1066 1.2328-.2035 2.0244-.1859 2.0515.0456 3.6746.8135 4.8242 2.2824a.908.908 0 0 1 .0667.1002c.7231 1.3556-.2762 6.2751-2.9867 10.5405zm-8.8166-6.1162c-.025.1794-.3089.4225-.6211.4225a.5821.5821 0 0 1-.0809-.0056c-.1873-.026-.3765-.144-.5059-.3156-.0458-.0605-.1203-.178-.1055-.2844.0055-.0401.0261-.0985.0925-.1488.1182-.0894.3518-.1226.6096-.0867.3163.0441.6426.1938.6113.4186zm7.9305-.4114c.0111.0792-.049.201-.1531.3102-.0683.0717-.212.1961-.4079.2232a.5456.5456 0 0 1-.075.0052c-.2935 0-.5414-.2344-.5607-.3717-.024-.1765.2641-.3106.5611-.352.297-.0414.6111.0088.6356.1851z"/></svg>PostgreSQL</li>
-            <li style="--c:#ffd43b"><svg class="logo" data-logo="python" viewBox="0 0 24 24" fill="#FFD43B" aria-hidden="true"><path d="M14.25.18l.9.2.73.26.59.3.45.32.34.34.25.34.16.33.1.3.04.26.02.2-.01.13V8.5l-.05.63-.13.55-.21.46-.26.38-.3.31-.33.25-.35.19-.35.14-.33.1-.3.07-.26.04-.21.02H8.77l-.69.05-.59.14-.5.22-.41.27-.33.32-.27.35-.2.36-.15.37-.1.35-.07.32-.04.27-.02.21v3.06H3.17l-.21-.03-.28-.07-.32-.12-.35-.18-.36-.26-.36-.36-.35-.46-.32-.59-.28-.73-.21-.88-.14-1.05-.05-1.23.06-1.22.16-1.04.24-.87.32-.71.36-.57.4-.44.42-.33.42-.24.4-.16.36-.1.32-.05.24-.01h.16l.06.01h8.16v-.83H6.18l-.01-2.75-.02-.37.05-.34.11-.31.17-.28.25-.26.31-.23.38-.2.44-.18.51-.15.58-.12.64-.1.71-.06.77-.04.84-.02 1.27.05zm-6.3 1.98l-.23.33-.08.41.08.41.23.34.33.22.41.09.41-.09.33-.22.23-.34.08-.41-.08-.41-.23-.33-.33-.22-.41-.09-.41.09zm13.09 3.95l.28.06.32.12.35.18.36.27.36.35.35.47.32.59.28.73.21.88.14 1.04.05 1.23-.06 1.23-.16 1.04-.24.86-.32.71-.36.57-.4.45-.42.33-.42.24-.4.16-.36.09-.32.05-.24.02-.16-.01h-8.22v.82h5.84l.01 2.76.02.36-.05.34-.11.31-.17.29-.25.25-.31.24-.38.2-.44.17-.51.15-.58.13-.64.09-.71.07-.77.04-.84.01-1.27-.04-1.07-.14-.9-.2-.73-.25-.59-.3-.45-.33-.34-.34-.25-.34-.16-.33-.1-.3-.04-.25-.02-.2.01-.13v-5.34l.05-.64.13-.54.21-.46.26-.38.3-.32.33-.24.35-.2.35-.14.33-.1.3-.06.26-.04.21-.02.13-.01h5.84l.69-.05.59-.14.5-.21.41-.28.33-.32.27-.35.2-.36.15-.36.1-.35.07-.32.04-.28.02-.21V6.07h2.09l.14.01zm-6.47 14.25l-.23.33-.08.41.08.41.23.33.33.23.41.08.41-.08.33-.23.23-.33.08-.41-.08-.41-.23-.33-.33-.23-.41-.08-.41.08z"/></svg>Python</li>
-            <li style="--c:#e8503a"><svg class="logo" data-logo="apachespark" viewBox="0 0 24 24" fill="#E25A1C" aria-hidden="true"><path d="M10.812 0c-.425.013-.845.215-1.196.605a3.593 3.593 0 00-.493.722c-.355.667-.425 1.415-.556 2.143a551.9 551.9 0 00-.726 4.087c-.027.16-.096.227-.244.273C5.83 8.386 4.06 8.94 2.3 9.514c-.387.125-.773.289-1.114.506-1.042.665-1.196 1.753-.415 2.71.346.422.79.715 1.284.936 1.1.49 2.202.976 3.3 1.47.019.01.036.013.053.019h-.004l1.306.535c0 .023.002.045 0 .073-.2 2.03-.39 4.063-.58 6.095-.04.419-.012.831.134 1.23.317.87 1.065 1.148 1.881.701.372-.204.666-.497.937-.818 1.372-1.623 2.746-3.244 4.113-4.872.111-.133.205-.15.363-.098.349.117.697.231 1.045.347h.001c.02.012.045.02.073.03l.142.042c1.248.416 2.68.775 3.929 1.19.4.132.622.164 1.045.098.311-.048.592-.062.828-.236.602-.33.995-.957.988-1.682-.005-.427-.154-.813-.35-1.186-.82-1.556-1.637-3.113-2.461-4.666-.078-.148-.076-.243.037-.375 1.381-1.615 2.756-3.236 4.133-4.855.272-.32.513-.658.653-1.058.308-.878-.09-1.57-1-1.741a2.783 2.783 0 00-1.235.069c-1.974.521-3.947 1.041-5.918 1.57-.175.047-.26.015-.355-.144a353.08 353.08 0 00-2.421-4.018 4.61 4.61 0 00-.652-.849c-.371-.37-.802-.549-1.227-.536zm.172 3.703a.592.592 0 01.189.211c.87 1.446 1.742 2.89 2.609 4.338.07.118.135.16.277.121 1.525-.41 3.052-.813 4.579-1.217.367-.098.735-.193 1.103-.289a.399.399 0 01-.1.2c-1.259 1.48-2.516 2.962-3.779 4.438-.11.13-.12.22-.04.37.937 1.803 1.768 3.309 2.498 4.76l-3.696-1.019c-.538-.18-1.077-.358-1.615-.539-.163-.055-.25-.03-.36.1-1.248 1.488-2.504 2.97-3.759 4.454a.398.398 0 01-.18.132c.035-.378.068-.757.104-1.136.149-1.572.297-3.144.451-4.716-.03-.318.117-.405-.322-.545-1.493-.593-3.346-1.321-4.816-1.905a.595.595 0 01.24-.134c1.797-.57 3.595-1.14 5.394-1.705.127-.04.199-.092.211-.233.013-.148.05-.294.076-.441.241-1.363.483-2.726.726-4.088.068-.386.14-.771.21-1.157z"/></svg>PySpark</li>
-            <li style="--c:#217346"><svg class="logo" data-logo="microsoftexcel" viewBox="0 0 24 24" fill="#217346" aria-hidden="true"><rect x="2.4" y="3" width="19.2" height="18" rx="2.6"/><path d="M8.3 8.3l7.4 7.4M15.7 8.3l-7.4 7.4" fill="none" stroke="#12161e" stroke-width="2.2" stroke-linecap="round"/></svg>Excel / VBA</li>
-            <li style="--c:var(--silver)"><svg class="logo" data-logo="github" viewBox="0 0 24 24" fill="#E7EBF1" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>Git &amp; GitHub</li>
-          </ul>
-        </div>
-        <div class="group reveal">
-          <h3>Analytics &amp; delivery</h3>
-          <ul>
-            <li style="--c:#f2c811"><svg class="logo" data-logo="powerbi" viewBox="0 0 24 24" fill="#F2C811" aria-hidden="true"><rect x="2.8" y="12.4" width="4.7" height="8.8" rx="1.1"/><rect x="9.6" y="7.4" width="4.7" height="13.8" rx="1.1"/><rect x="16.4" y="2.4" width="4.7" height="18.8" rx="1.1"/></svg>Power BI</li>
-            <li class="no-logo" style="--c:#f2c811">DAX &amp; Power Query</li>
-            <li style="--c:#e97627"><svg class="logo" data-logo="tableau" viewBox="0 0 24 24" fill="#E97627" aria-hidden="true"><rect x="10.7" y="3.2" width="2.6" height="17.6" rx=".5"/><rect x="3.2" y="10.7" width="17.6" height="2.6" rx=".5"/><rect x="4.8" y="4.4" width="1.4" height="7.2" rx=".4"/><rect x="1.9" y="7.3" width="7.2" height="1.4" rx=".4"/><rect x="18" y="14.3" width="1.1" height="5.2" rx=".3"/><rect x="15.95" y="16.35" width="5.2" height="1.1" rx=".3"/></svg>Tableau</li>
-            <li style="--c:#ff4b4b"><svg class="logo" data-logo="streamlit" viewBox="0 0 24 24" fill="#FF4B4B" aria-hidden="true"><path d="M16.673 11.32l6.862-3.618c.233-.136.554.12.442.387L20.463 17.1zm-8.556-.229l3.473-5.187c.203-.328.578-.316.793-.028l7.886 11.75zm-3.375 7.25c-.28 0-.835-.284-.993-.716l-3.72-9.46c-.118-.331.139-.614.48-.464l19.474 10.306c-.149.147-.453.337-.72.334z"/></svg>Streamlit</li>
-            <li class="no-logo" style="--c:var(--silver)">Executive reporting</li>
-          </ul>
-        </div>
-        <div class="group reveal">
-          <h3>AI-assisted development</h3>
-          <ul>
-            <li><svg class="logo" data-logo="claude" viewBox="0 0 24 24" fill="#D97757" aria-hidden="true"><path d="m4.7144 15.9555 4.7174-2.6471.079-.2307-.079-.1275h-.2307l-.7893-.0486-2.6956-.0729-2.3375-.0971-2.2646-.1214-.5707-.1215-.5343-.7042.0546-.3522.4797-.3218.686.0608 1.5179.1032 2.2767.1578 1.6514.0972 2.4468.255h.3886l.0546-.1579-.1336-.0971-.1032-.0972L6.973 9.8356l-2.55-1.6879-1.3356-.9714-.7225-.4918-.3643-.4614-.1578-1.0078.6557-.7225.8803.0607.2246.0607.8925.686 1.9064 1.4754 2.4893 1.8336.3643.3035.1457-.1032.0182-.0728-.164-.2733-1.3539-2.4467-1.445-2.4893-.6435-1.032-.17-.6194c-.0607-.255-.1032-.4674-.1032-.7285L6.287.1335 6.6997 0l.9957.1336.419.3642.6192 1.4147 1.0018 2.2282 1.5543 3.0296.4553.8985.2429.8318.091.255h.1579v-.1457l.1275-1.706.2368-2.0947.2307-2.6957.0789-.7589.3764-.9107.7468-.4918.5828.2793.4797.686-.0668.4433-.2853 1.8517-.5586 2.9021-.3643 1.9429h.2125l.2429-.2429.9835-1.3053 1.6514-2.0643.7286-.8196.85-.9046.5464-.4311h1.0321l.759 1.1293-.34 1.1657-1.0625 1.3478-.8804 1.1414-1.2628 1.7-.7893 1.36.0729.1093.1882-.0183 2.8535-.607 1.5421-.2794 1.8396-.3157.8318.3886.091.3946-.3278.8075-1.967.4857-2.3072.4614-3.4364.8136-.0425.0304.0486.0607 1.5482.1457.6618.0364h1.621l3.0175.2247.7892.522.4736.6376-.079.4857-1.2142.6193-1.6393-.3886-3.825-.9107-1.3113-.3279h-.1822v.1093l1.0929 1.0686 2.0035 1.8092 2.5075 2.3314.1275.5768-.3218.4554-.34-.0486-2.2039-1.6575-.85-.7468-1.9246-1.621h-.1275v.17l.4432.6496 2.3436 3.5214.1214 1.0807-.17.3521-.6071.2125-.6679-.1214-1.3721-1.9246L14.38 17.959l-1.1414-1.9428-.1397.079-.674 7.2552-.3156.3703-.7286.2793-.6071-.4614-.3218-.7468.3218-1.4753.3886-1.9246.3157-1.53.2853-1.9004.17-.6314-.0121-.0425-.1397.0182-1.4328 1.9672-2.1796 2.9446-1.7243 1.8456-.4128.164-.7164-.3704.0667-.6618.4008-.5889 2.386-3.0357 1.4389-1.882.929-1.0868-.0062-.1579h-.0546l-6.3385 4.1164-1.1293.1457-.4857-.4554.0608-.7467.2307-.2429 1.9064-1.3114Z"/></svg>Claude</li>
-            <li><svg class="logo" data-logo="openai" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2.6 19.5 7v10L12 21.4 4.5 17V7z" stroke="#C3CBD6" stroke-width="1.5" stroke-linejoin="round"/><path d="M12 7.2 16.6 9.9v5.4L12 18l-4.6-2.7V9.9z" stroke="#C3CBD6" stroke-width="1.4" stroke-linejoin="round"/></svg>ChatGPT</li>
-            <li><svg class="logo" data-logo="googlegemini" viewBox="0 0 24 24" fill="#8E7CFF" aria-hidden="true"><path d="M11.04 19.32Q12 21.51 12 24q0-2.49.93-4.68.96-2.19 2.58-3.81t3.81-2.55Q21.51 12 24 12q-2.49 0-4.68-.93a12.3 12.3 0 0 1-3.81-2.58 12.3 12.3 0 0 1-2.58-3.81Q12 2.49 12 0q0 2.49-.96 4.68-.93 2.19-2.55 3.81a12.3 12.3 0 0 1-3.81 2.58Q2.49 12 0 12q2.49 0 4.68.96 2.19.93 3.81 2.55t2.55 3.81"/></svg>Gemini</li>
-            <li><svg class="logo" data-logo="githubcopilot" viewBox="0 0 24 24" fill="#E7EBF1" aria-hidden="true"><path d="M23.922 16.997C23.061 18.492 18.063 22.02 12 22.02 5.937 22.02.939 18.492.078 16.997A.641.641 0 0 1 0 16.741v-2.869a.883.883 0 0 1 .053-.22c.372-.935 1.347-2.292 2.605-2.656.167-.429.414-1.055.644-1.517a10.098 10.098 0 0 1-.052-1.086c0-1.331.282-2.499 1.132-3.368.397-.406.89-.717 1.474-.952C7.255 2.937 9.248 1.98 11.978 1.98c2.731 0 4.767.957 6.166 2.093.584.235 1.077.546 1.474.952.85.869 1.132 2.037 1.132 3.368 0 .368-.014.733-.052 1.086.23.462.477 1.088.644 1.517 1.258.364 2.233 1.721 2.605 2.656a.841.841 0 0 1 .053.22v2.869a.641.641 0 0 1-.078.256Zm-11.75-5.992h-.344a4.359 4.359 0 0 1-.355.508c-.77.947-1.918 1.492-3.508 1.492-1.725 0-2.989-.359-3.782-1.259a2.137 2.137 0 0 1-.085-.104L4 11.746v6.585c1.435.779 4.514 2.179 8 2.179 3.486 0 6.565-1.4 8-2.179v-6.585l-.098-.104s-.033.045-.085.104c-.793.9-2.057 1.259-3.782 1.259-1.59 0-2.738-.545-3.508-1.492a4.359 4.359 0 0 1-.355-.508Zm2.328 3.25c.549 0 1 .451 1 1v2c0 .549-.451 1-1 1-.549 0-1-.451-1-1v-2c0-.549.451-1 1-1Zm-5 0c.549 0 1 .451 1 1v2c0 .549-.451 1-1 1-.549 0-1-.451-1-1v-2c0-.549.451-1 1-1Zm3.313-6.185c.136 1.057.403 1.913.878 2.497.442.544 1.134.938 2.344.938 1.573 0 2.292-.337 2.657-.751.384-.435.558-1.15.558-2.361 0-1.14-.243-1.847-.705-2.319-.477-.488-1.319-.862-2.824-1.025-1.487-.161-2.192.138-2.533.529-.269.307-.437.808-.438 1.578v.021c0 .265.021.562.063.893Zm-1.626 0c.042-.331.063-.628.063-.894v-.02c-.001-.77-.169-1.271-.438-1.578-.341-.391-1.046-.69-2.533-.529-1.505.163-2.347.537-2.824 1.025-.462.472-.705 1.179-.705 2.319 0 1.211.175 1.926.558 2.361.365.414 1.084.751 2.657.751 1.21 0 1.902-.394 2.344-.938.475-.584.742-1.44.878-2.497Z"/></svg>GitHub Copilot</li>
-            <li class="no-logo" style="--c:var(--silver)">Prompt-assisted DAX &amp; SQL</li>
-            <li class="no-logo" style="--c:var(--silver)">AI-drafted documentation</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="domains reveal">
-        <p class="eyebrow">Beyond the tools</p>
-        <h3>The domains I've actually worked in.</h3>
-
-        <div class="dgrid">
-          <div class="dcard">
-            <span class="src">2015–2018 · Credit &amp; Risk</span>
-            <h4>Financial &amp; credit risk analysis</h4>
-            <p>Exposure, collections behaviour and portfolio quality — turned into the reporting the business made lending decisions from.</p>
-          </div>
-          <div class="dcard">
-            <span class="src">4+ years, every role</span>
-            <h4>Business analysis</h4>
-            <p>Sitting with the people who own the process and turning "we need a report" into a defined grain, an agreed metric, and someone accountable for it.</p>
-          </div>
-          <div class="dcard">
-            <span class="src">2018–2019 + portfolio</span>
-            <h4>Supply chain &amp; inventory</h4>
-            <p>Warehouse stock levels and inventory monitoring in branch operations; a lakehouse-to-Power BI build that surfaced ~$95K in trapped capital.</p>
-          </div>
-          <div class="dcard">
-            <span class="src">2018–2019 · Branch ops</span>
-            <h4>Operations analytics</h4>
-            <p>Branch expenses, liquidations and staff performance on daily KPI monitoring — the numbers a supervisor is answerable for every morning.</p>
-          </div>
-          <div class="dcard">
-            <span class="src">Portfolio project</span>
-            <h4>Fraud &amp; transaction analytics</h4>
-            <p>Pattern analysis across 6.3M PaySim transactions in PostgreSQL and Python, at a volume that breaks a spreadsheet.</p>
-          </div>
-          <div class="dcard">
-            <span class="src">Client work</span>
-            <h4>Executive reporting</h4>
-            <p>Case studies and briefing decks written for the people who approve the budget, not for other analysts.</p>
-          </div>
-        </div>
-
-        <div class="softs">
-          <span>Stakeholder communication</span>
-          <span>Requirements gathering</span>
-          <span>Metric definition &amp; documentation</span>
-          <span>Training &amp; enablement</span>
-          <span>Client delivery — Fiverr / Upwork</span>
-          <span>Remote across time zones</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- PATH -->
-  <section id="path">
-    <div class="wrap">
-      <div class="sec-head reveal">
-        <p class="eyebrow">Path</p>
-        <h2>Numbers first, teaching in the middle, platforms now.</h2>
-      </div>
-
-      <div class="path">
-        <div class="row reveal">
-          <div class="when">2025 — present</div>
-          <div>
-            <h3>Data &amp; BI Analyst · Freelance</h3>
-            <div class="where">Fiverr &amp; Upwork · remote</div>
-            <p>Dashboards, data models, and end-to-end platform builds for clients — plus the public portfolio projects above.</p>
-          </div>
-        </div>
-        <div class="row reveal quiet">
-          <div class="when">2019 — 2025</div>
-          <div>
-            <h3>Teaching</h3>
-            <div class="where">Seven years in the classroom</div>
-            <p>Where I learned to explain a model to someone who did not ask for the technical version — which is most of the room in a stakeholder meeting.</p>
-          </div>
-        </div>
-        <div class="row reveal">
-          <div class="when">2018 — 2019</div>
-          <div>
-            <h3>Branch Operations Supervisor</h3>
-            <div class="where">Personal Collection Direct Selling Inc.</div>
-            <p>Ran branch analytics end to end: warehouse inventory levels, branch expenses, liquidations, stock monitoring
-              and staff performance — daily KPI monitoring in Excel, VBA and Power BI.</p>
-          </div>
-        </div>
-        <div class="row reveal">
-          <div class="when">2015 — 2018</div>
-          <div>
-            <h3>Credit &amp; Risk Analyst</h3>
-            <div class="where">Personal Collection Direct Selling Inc.</div>
-            <p>Owned the credit and risk data — exposure, collections behaviour, and the reporting the business made lending decisions from.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="certs reveal">
-        <p class="eyebrow">Credentials</p>
-        <h3>Certifications</h3>
-        <div class="cgrid">
-          <div class="cert">
-            <span class="st">Earned</span>
-            <h4>Full-Stack Data Analytics</h4>
-            <p>EXCELHelpline</p>
-          </div>
-          <div class="cert prog">
-            <span class="st">In progress</span>
-            <h4>Microsoft Fabric Data Engineer Associate — DP-700</h4>
-            <p>Microsoft</p>
-          </div>
-          <div class="cert prog">
-            <span class="st">In progress</span>
-            <h4>dbt Analytics Engineering</h4>
-            <p>dbt Labs</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CONTACT -->
-  <section id="contact" class="contact">
-    <div class="wrap reveal">
-      <p class="eyebrow">Contact</p>
-      <h2>Have data that needs a pipeline behind it?</h2>
-      <p style="color:var(--muted);max-width:52ch;margin-top:16px">
-        Open to analytics engineering and BI roles, and to freelance dashboard work. Based in Davao City, working across time zones.</p>
-      <div class="links">
-        <a class="btn btn-solid" href="mailto:glcapitan007@gmail.com">Email me →</a>
-        <a class="btn btn-ghost" href="https://linkedin.com/in/erwin-glenn-capitan-ii/">LinkedIn</a>
-        <a class="btn btn-ghost" href="https://github.com/glcapitan">GitHub</a>
-        <a class="btn btn-ghost" href="assets/resume.pdf">Résumé (PDF)</a>
-      </div>
-    </div>
-  </section>
-</main>
-
-<footer>
-  <div class="wrap foot-in">
-    <span>© <span id="yr">2026</span> Erwin Glenn Capitan II</span>
-    <span>Davao City, Philippines</span>
-  </div>
-</footer>
-
-<script>
-  document.getElementById('yr').textContent = new Date().getFullYear();
-
-  // monogram fallback if the headshot file isn't there yet
-  var shot = document.getElementById('headshot');
-  shot.addEventListener('error', function(){ document.getElementById('portrait').classList.add('no-img'); });
-  if (shot.complete && shot.naturalWidth === 0) document.getElementById('portrait').classList.add('no-img');
-
-  // Tool logos are inlined above, so they work offline. If you drop an official
-  // SVG at assets/logos/<slug>.svg it replaces the inline one automatically.
-  document.querySelectorAll('svg.logo[data-logo]').forEach(function(svg){
-    var url = 'assets/logos/' + svg.dataset.logo + '.svg';
-    var probe = new Image();
-    probe.onload = function(){
-      var img = document.createElement('img');
-      img.className = 'logo'; img.src = url; img.alt = '';
-      svg.replaceWith(img);
-    };
-    probe.src = url;
-  });
-
-  // remove thumbnail slots with no image file yet, so cards never show a broken frame
-  document.querySelectorAll('.card .shot img').forEach(function(img){
-    img.addEventListener('error', function(){ img.parentNode.remove(); });
-  });
-
-  // scroll reveal
-  var items = document.querySelectorAll('.reveal');
-  if ('IntersectionObserver' in window) {
-    var io = new IntersectionObserver(function(entries){
-      entries.forEach(function(e, i){
-        if (e.isIntersecting) {
-          e.target.style.transitionDelay = Math.min(i * 60, 240) + 'ms';
-          e.target.classList.add('in');
-          io.unobserve(e.target);
-        }
-      });
-    }, { rootMargin: '0px 0px -8% 0px', threshold: .12 });
-    items.forEach(function(el){ io.observe(el); });
-    setTimeout(function(){ items.forEach(function(el){ el.classList.add('in'); }); }, 2500);
-  } else {
-    items.forEach(function(el){ el.classList.add('in'); });
-  }
-</script>
 </body>
 </html>
