@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Financial Performance Dashboard — Erwin Glenn Capitan II</title>
+<meta name="description" content="A one-click FP&amp;A report in Excel: change a single date cell, refresh, and every KPI, variance and chart re-points — revenue, gross profit and EBITDA against budget, prior period and prior year.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=JetBrains+Mono:wght@400;500&family=Public+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%230b0e13'/><text x='16' y='22' font-family='monospace' font-size='15' fill='%23e5b23c' text-anchor='middle'>EC</text></svg>">
+<style>
+  :root{
+    --ink:#0b0e13;--surface:#12161e;--surface-2:#171c26;--line:#242c38;
+    --text:#e7ebf1;--muted:#8b95a7;--bronze:#c07f4a;--silver:#b9c2ce;--gold:#e5b23c;
+    --display:"Bricolage Grotesque",Georgia,serif;
+    --body:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+    --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+    --maxw:820px;--pad:clamp(20px,5vw,48px);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--ink);color:var(--text);font-family:var(--body);font-weight:300;
+    font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased}
+  body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+    background:radial-gradient(620px 380px at 88% -10%,rgba(229,178,60,.09),transparent 70%),
+    radial-gradient(520px 340px at -8% 14%,rgba(192,127,74,.08),transparent 70%)}
+  .wrap{position:relative;z-index:1;max-width:var(--maxw);margin:0 auto;padding:0 var(--pad)}
+  a{color:inherit}
+  a:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+  h1,h2,h3{font-family:var(--display);font-weight:600;letter-spacing:-.02em;line-height:1.12;margin:0}
+  p{margin:0 0 16px}
+  .bar{position:sticky;top:0;z-index:20;backdrop-filter:blur(12px);background:rgba(11,14,19,.78);
+    border-bottom:1px solid var(--line)}
+  .bar-in{max-width:var(--maxw);margin:0 auto;padding:13px var(--pad);display:flex;
+    align-items:center;justify-content:space-between;gap:16px;font-family:var(--mono);font-size:12px}
+  .bar a{color:var(--muted);text-decoration:none;transition:color .18s}
+  .bar a:hover{color:var(--text)}
+  .bar .home{color:var(--text)}
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--muted);margin:0 0 16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .eyebrow::before{content:"";width:22px;height:1px;background:var(--gold);flex:none}
+  header.head{padding:clamp(44px,7vw,76px) 0 clamp(28px,4vw,40px)}
+  header.head h1{font-size:clamp(30px,5vw,50px);font-weight:800}
+  header.head .sub{font-size:clamp(16.5px,2vw,19px);color:#cfd6e0;margin-top:20px;max-width:52ch}
+  .meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1px;
+    background:var(--line);border:1px solid var(--line);border-radius:3px;overflow:hidden;margin:34px 0 0}
+  .meta div{background:var(--surface);padding:15px 16px}
+  .meta dt{font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;
+    color:var(--muted);margin-bottom:7px}
+  .meta dd{margin:0;font-size:13.5px;color:#dbe1ea;line-height:1.5}
+  .meta dd a{color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(229,178,60,.35)}
+  section{padding:clamp(34px,5vw,52px) 0;border-top:1px solid var(--line)}
+  section h2{font-size:clamp(21px,2.8vw,28px);margin-bottom:20px}
+  section p{color:#c3cbd7;max-width:64ch;font-size:15.5px}
+  ol.steps{counter-reset:s;list-style:none;margin:0;padding:0}
+  ol.steps li{counter-increment:s;position:relative;padding:0 0 18px 44px;font-size:15px;color:#c3cbd7;max-width:62ch}
+  ol.steps li::before{content:counter(s,decimal-leading-zero);position:absolute;left:0;top:1px;
+    font-family:var(--mono);font-size:11.5px;color:var(--gold);border:1px solid var(--line);
+    border-radius:2px;padding:3px 7px;background:var(--surface)}
+  ol.steps li b{color:var(--text);font-weight:600}
+  ul.checks{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
+  ul.checks li{position:relative;padding-left:26px;font-size:15px;color:#c3cbd7;max-width:62ch}
+  ul.checks li::before{content:"";position:absolute;left:2px;top:9px;width:9px;height:9px;
+    border:1px solid var(--gold);transform:rotate(45deg)}
+  ul.questions{list-style:none;margin:0;padding:0;counter-reset:q}
+  ul.questions li{counter-increment:q;border-left:2px solid var(--bronze);padding:2px 0 2px 16px;
+    margin-bottom:16px;font-size:15.5px;color:#cfd6e0;max-width:62ch}
+  figure{margin:26px 0 0;border:1px solid var(--line);border-radius:3px;background:var(--surface);padding:10px}
+  figure img{display:block;width:100%;border-radius:2px}
+  figcaption{font-family:var(--mono);font-size:11px;color:var(--muted);padding:11px 4px 3px;letter-spacing:.04em}
+  .note{border:1px dashed var(--line);border-radius:3px;padding:20px 22px;background:rgba(23,28,38,.5)}
+  .note h3{font-size:15px;margin-bottom:10px;font-family:var(--body);font-weight:600}
+  .note p{color:var(--muted);font-size:14px;margin:0;max-width:64ch}
+  .cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:8px}
+  .btn{display:inline-flex;align-items:center;gap:9px;padding:11px 20px;border-radius:2px;
+    font-family:var(--mono);font-size:12.5px;letter-spacing:.04em;text-decoration:none;transition:.18s}
+  .btn-solid{background:var(--gold);color:#14100a;font-weight:500}
+  .btn-solid:hover{background:#f0c257}
+  .btn-ghost{border:1px solid var(--line);color:var(--text)}
+  .btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
+  footer{border-top:1px solid var(--line);padding:26px 0 40px;font-family:var(--mono);
+    font-size:11px;color:var(--muted);letter-spacing:.05em}
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <div class="bar-in">
+    <a class="home" href="../index.html">← Erwin Glenn Capitan II</a>
+    <a href="https://github.com/glcapitan/financial-performance-dashboard">View repo</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <header class="head">
+    <p class="eyebrow">Project summary · Excel · Power Query · Power Pivot · DAX</p>
+    <h1>Financial Performance Dashboard</h1>
+    <p class="sub">A one-click FP&amp;A report in Excel: change a single date cell, refresh, and every KPI, variance and chart re-points — revenue, gross profit and EBITDA against budget, prior period and prior year.</p>
+
+    <dl class="meta">
+      <div><dt>Role</dt><dd>Personal build</dd></div>
+      <div><dt>Stack</dt><dd>Excel · Power Query · Power Pivot · DAX</dd></div>
+      <div><dt>Status</dt><dd>Complete</dd></div>
+      <div><dt>Repository</dt><dd><a href="https://github.com/glcapitan/financial-performance-dashboard">glcapitan / financial-performance-dashboard</a></dd></div>
+      
+    </dl>
+  </header>
+
+  <section>
+    <h2>Why I built it</h2>
+    <p>Most finance teams hand stakeholders a raw P&amp;L export. Leadership asks the same three questions every month — how did we do against budget, against last period, against last year — and answering them by hand is where the reporting week goes.</p>
+  </section>
+
+  <section>
+    <h2>Questions it answers</h2>
+    <ul class="questions">
+      <li>How did we perform against budget this month, and where did the variance come from?</li>
+      <li>How does that compare to the prior period and the prior year?</li>
+      <li>Which departments and cost types are driving operating spend?</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>How I built it</h2>
+    <ol class="steps">
+      <li><b>Power Query ETL.</b> Eight human-readable monthly P&L grids get unpivoted into tidy tables and appended into single fact tables — repeatable on every refresh instead of re-pasted.</li>
+      <li><b>Star schema in Power Pivot.</b> Two fact tables, actuals and budget, related to date, account and department lookups — the same modeling discipline as a warehouse, inside a workbook.</li>
+      <li><b>DAX time intelligence.</b> Current month, trailing 3, 6 and 12, and YTD measures with matched prior-period and prior-year comparisons, driven by a SWITCH-based period selector.</li>
+      <li><b>Presentation layer isolation.</b> The dashboard reads only from measures, never the raw tabs, so changing the source data never breaks the report.</li>
+      <li><b>CFO-style write-up.</b> Variances translated into findings and prioritised recommendations in a companion memo.</li>
+    </ol>
+        <figure data-shot><img src="../assets/projects/financial-dashboard/https://raw.githubusercontent.com/glcapitan/financial-performance-dashboard/main/docs/dashboard-preview.png" alt="The dashboard — KPI tiles, gauges and variance charts" loading="lazy"><figcaption>The dashboard — KPI tiles, gauges and variance charts</figcaption></figure>
+        <figure data-shot><img src="../assets/projects/financial-dashboard/https://raw.githubusercontent.com/glcapitan/financial-performance-dashboard/main/docs/pipeline.png" alt="Build pipeline: P&amp;L tabs through Power Query into the model" loading="lazy"><figcaption>Build pipeline: P&amp;L tabs through Power Query into the model</figcaption></figure>
+  </section>
+
+  <section>
+    <h2>What it surfaces</h2>
+    <ul class="checks">
+      <li>Revenue on plan but margin off plan: revenue landed within about 1% of budget and grew 12% year over year, while gross margin compressed roughly 15 points — locating the problem in cost of goods, not sales.</li>
+      <li>Cost discipline cushioned the result: operating expenses came in 24% under budget, turning a budgeted EBITDA loss of $(159k) into $(54k).</li>
+      <li>One line ran hot: professional fees was the only over-budget category at +40% against under-spend everywhere else — exactly the exception a dashboard should flag.</li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="note">
+      <h3>Honest notes</h3>
+      <p>Built on a sample trailing-twelve-month dataset included in the repo; the figures above are illustrative of the read-outs the dashboard produces.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="cta">
+      <a class="btn btn-solid" href="https://github.com/glcapitan/financial-performance-dashboard">Open the repository →</a>
+      <a class="btn btn-ghost" href="../index.html#work">All projects</a>
+      <a class="btn btn-ghost" href="../index.html#contact">Get in touch</a>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div class="wrap">© <span id="yr">2026</span> Erwin Glenn Capitan II · Davao City, Philippines</div>
+</footer>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  // hide screenshot slots that have no file yet, so the page never shows a broken image
+  document.querySelectorAll('figure[data-shot] img').forEach(function(img){
+    img.addEventListener('error', function(){ img.closest('figure').remove(); });
+  });
+</script>
+</body>
+</html>
